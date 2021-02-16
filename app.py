@@ -11,8 +11,8 @@ from pymystem3 import Mystem
 token = 'enter_your_token'
 
 bot = telebot.TeleBot(token)
-m = Mystem()
-
+STEMMER = Mystem()
+SHIT_PERCENT = 0.01
 
 @bot.message_handler(commands=["rp"])
 def rare_parrot(message):
@@ -23,10 +23,10 @@ def rare_parrot(message):
 @bot.message_handler(content_types=['text'])
 def send_text(message):
     try:
-        words = m.lemmatize(message.text)
+        words = STEMMER.lemmatize(message.text)
         words = [x.strip() for x in words if len(x.strip()) > 1]
         chosen_one = random.choice(words).strip()
-        if random.random() > 0.5 and len(chosen_one) > 0 and chosen_one != " ":
+        if random.random() > SHIT_PERCENT and len(chosen_one) > 0 and chosen_one != " ":
             print(' '.join(words), f"'{chosen_one}'")
             bot.reply_to(message, f"{chosen_one} у тебя в штанах")
     except:
